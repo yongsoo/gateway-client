@@ -17,6 +17,8 @@
   "homepage": "https://github.com/yongsoo/gateway-client",
   "dependencies": {
     "bluebird": "^2.9.6",
-    "superagent": "^0.21.0"
+    "mocha": "^2.1.0",
+    "superagent": "^0.21.0",
+    "uuid": "^2.0.1"
   }
 }
