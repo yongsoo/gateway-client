@@ -1,7 +1,7 @@
 {
   "name": "gateway-client",
   "version": "0.0.1",
-  "description": "Interface for interacting with Gatewayd API's",
+  "description": "Gateway client for interacting with Gatewayd API's",
   "main": "src/index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha -R spec test/**/*.js"
@@ -11,7 +11,6 @@
     "url": "https://github.com/yongsoo/gateway-client.git"
   },
   "author": "Yong-Soo Chung",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/yongsoo/gateway-client/issues"
   },
