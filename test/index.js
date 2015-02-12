@@ -3,8 +3,6 @@ var GatewayClient = require(__dirname+'/../src/index')
 var assert = require('assert')
 var uuid = require('uuid') 
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 describe('Gateway Client', function() {
   var gatewayClient;
 
