@@ -27,10 +27,10 @@ var gatewayClient = new GatewayClient({
   password : 'GATEWAY_PASSWORD'
 })
 
-// getTransactions: get all external_transactions with status "queued",
+// getAllTransactions: get all external_transactions with status "queued",
 // in order of time (earlier transactions are at the top) (GET)
 
-gatewayClient.getTransactions()
+gatewayClient.getAllTransactions()
 
 // getNextTransaction: get the next transaction item that's queued (GET)
 

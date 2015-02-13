@@ -8,7 +8,7 @@ var GatewayClient = function(options) {
   this.password = options.password;
 }
 
-GatewayClient.prototype.getTransactions = function() {
+GatewayClient.prototype.getAllTransactions = function() {
   var _this = this;
 
   return new Promise(function(resolve, reject) {
@@ -31,7 +31,7 @@ GatewayClient.prototype.getTransactions = function() {
 GatewayClient.prototype.getNextTransaction = function() {
   var _this = this;
 
-  return _this.getTransactions()
+  return _this.getAllTransactions()
     .then(function(transactions) {
       return Promise.resolve(transactions[0]);
     });

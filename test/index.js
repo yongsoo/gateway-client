@@ -15,7 +15,7 @@ describe('Gateway Client', function() {
   });
 
   it('should be able to get external payments', function(done) {
-    gatewayClient.getTransactions()
+    gatewayClient.getAllTransactions()
       .then(function(payments) {
         assert.strictEqual(typeof payments, 'object');
         done();
