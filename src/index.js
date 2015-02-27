@@ -83,6 +83,7 @@ GatewayClient.prototype.createExternalAccount = function(externalAccount) {
         if (error) {
           return reject(error);
         }
+        console.log('External Account created:', response.body);
         resolve(response.body);
       })
   })
