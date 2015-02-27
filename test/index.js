@@ -10,9 +10,9 @@ describe('Gateway Client', function() {
 
   beforeEach(function() {
     gatewayClient = new GatewayClient({
-      url: process.env['EUR_GATEWAY_URL'],
-      username: process.env['EUR_GATEWAY_USERNAME'],
-      password: process.env['EUR_GATEWAY_PASSWORD']
+      url: process.env['USD_GATEWAY_URL'],
+      username: process.env['USD_GATEWAY_USERNAME'],
+      password: process.env['USD_GATEWAY_PASSWORD']
     })
   });
 
@@ -25,7 +25,6 @@ describe('Gateway Client', function() {
   });
 
   it.skip('should be able to update transaction status to cleared', function(done) {
-    var uuidNum = uuid.v4();
     var transaction = {
       deposit: false,
       external_account_id: 12,
@@ -58,7 +57,6 @@ describe('Gateway Client', function() {
 
     gatewayClient.createExternalAccount(externalAcct)
       .error(function(error) {
-        console.log('error', error);
         assert.strictEqual(error instanceof Error, true);
         assert.strictEqual(error.message, 'Address must be a string');
         done();
@@ -69,14 +67,11 @@ describe('Gateway Client', function() {
     var externalAcct = {
       address: 'gateway',
       name: 94851,
-      type: 'gateway' 
+      type: 'gateway'
     }
-
-    console.log('external act', externalAcct);
 
     gatewayClient.createExternalAccount(externalAcct)
       .error(function(error) {
-        console.log('error', error);
         assert.strictEqual(error instanceof Error, true);
         assert.strictEqual(error.message, 'Name must be a string');
         done();
@@ -92,15 +87,123 @@ describe('Gateway Client', function() {
 
     gatewayClient.createExternalAccount(externalAcct)
       .error(function(error) {
-        console.log('error', error);
         assert.strictEqual(error instanceof Error, true);
         assert.strictEqual(error.message, 'Type must be a string');
         done();
       })
   });
 
+  it('should not be able to create an external transaction with invalid source_amount field', function(done) {
+    var transaction = {
+      deposit: false,
+      external_account_id: 12,
+      source_amount: 'invalid',
+      source_currency: 'EUR',
+      destination_amount: 0.01,
+      destination_currency: 'EUR',
+      status: 'queued',
+      ripple_transaction_id: 234,
+      destination_account_id: 34,
+      uid: uuid.v4()
+    };
+
+    gatewayClient.createExternalTransaction(transaction)
+      .error(function(error) {
+        assert.strictEqual(error instanceof Error, true);
+        assert.strictEqual(error.message, 'source_amount must be a number');
+        done();
+      })
+  });
+
+  it('should not be able to create an external transaction with invalid destination_amount field', function(done) {
+    var transaction = {
+      deposit: false,
+      external_account_id: 12,
+      source_amount: 0.01,
+      source_currency: 'EUR',
+      destination_amount: 'invalid',
+      destination_currency: 'EUR',
+      status: 'queued',
+      ripple_transaction_id: 234,
+      destination_account_id: 34,
+      uid: uuid.v4()
+    };
+
+    gatewayClient.createExternalTransaction(transaction)
+      .error(function(error) {
+        assert.strictEqual(error instanceof Error, true);
+        assert.strictEqual(error.message, 'destination_amount must be a number');
+        done();
+      })
+  });
+
+  it('should not be able to create an external transaction with invalid source_currency field', function(done) {
+    var transaction = {
+      deposit: false,
+      external_account_id: 12,
+      source_amount: 0.01,
+      source_currency: 3333,
+      destination_amount: 0.01,
+      destination_currency: 'EUR',
+      status: 'queued',
+      ripple_transaction_id: 234,
+      destination_account_id: 34,
+      uid: uuid.v4()
+    };
+
+    gatewayClient.createExternalTransaction(transaction)
+      .error(function(error) {
+        assert.strictEqual(error instanceof Error, true);
+        assert.strictEqual(error.message, 'source_currency must be a string');
+        done();
+      })
+  });
+
+  it('should not be able to create an external transaction with invalid destination_currency field', function(done) {
+    var transaction = {
+      deposit: false,
+      external_account_id: 12,
+      source_amount: 0.01,
+      source_currency: 'EUR',
+      destination_amount: 0.01,
+      destination_currency: 3333,
+      status: 'queued',
+      ripple_transaction_id: 234,
+      destination_account_id: 34,
+      uid: uuid.v4()
+    };
+
+    gatewayClient.createExternalTransaction(transaction)
+      .error(function(error) {
+        assert.strictEqual(error instanceof Error, true);
+        assert.strictEqual(error.message, 'destination_currency must be a string');
+        done();
+      })
+  });
+
+  it('should not be able to create an external transaction with invalid destination_account_id field', function(done) {
+    var transaction = {
+      deposit: false,
+      external_account_id: 12,
+      source_amount: 0.01,
+      source_currency: 'EUR',
+      destination_amount: 0.01,
+      destination_currency: 'EUR',
+      status: 'queued',
+      ripple_transaction_id: 234,
+      destination_account_id: 'invalid',
+      uid: uuid.v4()
+    };
+
+    gatewayClient.createExternalTransaction(transaction)
+      .error(function(error) {
+        assert.strictEqual(error instanceof Error, true);
+        assert.strictEqual(error.message, 'destination_account_id must be a number');
+        done();
+      })
+  });
+
   it.skip('should be able to create a transaction', function(done) {
-    var uuidNum = uuid.v4();
     var transaction = {
       deposit: false,
       external_account_id: 12,
@@ -125,9 +228,9 @@ describe('Gateway Client', function() {
 
     // In order for this test to pass, you must give a unique address, user_id, and uid
     var externalAcct = {
-      address: 'gateway',
-      name: 'GATEWAY_ACCOUNT',
-      type: 'gateway' 
+      address: 'DUMMY_USD_FOR_QUOTING_ONLY',
+      name: 'For Quoting',
+      type: 'acct' 
     }
 
     gatewayClient.createExternalAccount(externalAcct)

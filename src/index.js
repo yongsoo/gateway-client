@@ -41,6 +41,26 @@ GatewayClient.prototype.createExternalTransaction = function(transaction) {
   var _this = this;
 
   return new Promise(function(resolve, reject) {
+    if (typeof transaction.source_amount !== 'number') {
+      return reject(new Error('source_amount must be a number'));
+    }
+
+    if (typeof transaction.destination_amount !== 'number') {
+      return reject(new Error('destination_amount must be a number'));
+    }
+
+    if (typeof transaction.source_currency !== 'string') {
+      return reject(new Error('source_currency must be a string'));
+    }
+
+    if (typeof transaction.destination_currency !== 'string') {
+      return reject(new Error('destination_currency must be a string')); 
+    }
+
+    if (typeof transaction.destination_account_id !== 'number') {
+      return reject(new Error('destination_account_id must be a number'));
+    }
+
     http
       .post(_this.url + '/v1/external_transactions')
       .auth(_this.username, _this.password)
