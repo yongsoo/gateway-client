@@ -75,6 +75,18 @@ GatewayClient.prototype.createExternalAccount = function(externalAccount) {
   var _this = this;
 
   return new Promise(function(resolve, reject) {
+    if (typeof externalAccount.address !== 'string') {
+      return reject(new Error('Address must be a string'));
+    }
+
+    if (typeof externalAccount.name !== 'string') {
+      return reject(new Error('Name must be a string'));
+    }
+
+    if (typeof externalAccount.type !== 'string') {
+      return reject(new Error('Type must be a string'));
+    }
+
     http
       .post(_this.url + '/v1/external_accounts')
       .auth(_this.username, _this.password)

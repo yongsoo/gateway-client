@@ -49,6 +49,56 @@ describe('Gateway Client', function() {
       })
   });
 
+  it('should not be able to create an external account with invalid address field', function(done) {
+    var externalAcct = {
+      address: 3,
+      name: 'GATEWAY_ACCOUNT',
+      type: 'gateway' 
+    }
+
+    gatewayClient.createExternalAccount(externalAcct)
+      .error(function(error) {
+        console.log('error', error);
+        assert.strictEqual(error instanceof Error, true);
+        assert.strictEqual(error.message, 'Address must be a string');
+        done();
+      })
+  });
+
+  it('should not be able to create an external account with invalid name field', function(done) {
+    var externalAcct = {
+      address: 'gateway',
+      name: 94851,
+      type: 'gateway' 
+    }
+
+    console.log('external act', externalAcct);
+
+    gatewayClient.createExternalAccount(externalAcct)
+      .error(function(error) {
+        console.log('error', error);
+        assert.strictEqual(error instanceof Error, true);
+        assert.strictEqual(error.message, 'Name must be a string');
+        done();
+      })
+  });
+
+  it('should not be able to create an external account with invalid type field', function(done) {
+    var externalAcct = {
+      address: 'gateway',
+      name: 'GATEWAY_ACCOUNT',
+      type: 54252 
+    }
+
+    gatewayClient.createExternalAccount(externalAcct)
+      .error(function(error) {
+        console.log('error', error);
+        assert.strictEqual(error instanceof Error, true);
+        assert.strictEqual(error.message, 'Type must be a string');
+        done();
+      })
+  });
+
   it.skip('should be able to create a transaction', function(done) {
     var uuidNum = uuid.v4();
     var transaction = {
@@ -71,8 +121,7 @@ describe('Gateway Client', function() {
       })
   });
 
-  it('should be able to create an external account', function(done) {
-    var uuidNum = uuid.v4();
+  it.skip('should be able to create an external account', function(done) {
 
     // In order for this test to pass, you must give a unique address, user_id, and uid
     var externalAcct = {
