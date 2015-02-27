@@ -33,14 +33,15 @@ GatewayClient.prototype.getNextTransaction = function() {
 
   return _this.getAllTransactions()
     .then(function(transactions) {
-      if (typeof transactions[0].source_amount !== 'number') {
-        return reject(new Error('Transaction number must be a number'));
-      }
+      if (transactions.length > 0) {
+        if (typeof transactions[0].source_amount !== 'number') {
+          return reject(new Error('Transaction number must be a number'));
+        }
 
-      if (typeof transactions[0].toAccount === null) {
-        return reject(new Error("Transaction's toAccount field can not be empty"));
+        if (typeof transactions[0].toAccount === null) {
+          return reject(new Error("Transaction's toAccount field can not be empty"));
+        }
       }
-
       return Promise.resolve(transactions[0]);
     });
 }

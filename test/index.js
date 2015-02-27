@@ -224,13 +224,13 @@ describe('Gateway Client', function() {
       })
   });
 
-  it.skip('should be able to create an external account', function(done) {
+  it('should be able to create an external account', function(done) {
 
     // In order for this test to pass, you must give a unique address, user_id, and uid
     var externalAcct = {
-      address: 'DUMMY_USD_FOR_QUOTING_ONLY',
-      name: 'For Quoting',
-      type: 'acct' 
+      address: 'gateway',
+      name: 'GATEWAY_ACCOUNT',
+      type: 'gateway' 
     }
 
     gatewayClient.createExternalAccount(externalAcct)
